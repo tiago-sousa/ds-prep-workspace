@@ -81,7 +81,8 @@ class SnakeGame:
         :param new_head_pos: Next snake head position
         :return: True if the new head position is equal to the apple position
         """
-        return False  # TODO: Check if snake have hitted the apple
+        if new_head_pos == self.apple_position:
+            return True
 
     def _hit_wall(self) -> None:
         """
@@ -89,13 +90,17 @@ class SnakeGame:
         """
         head_pos = self.snake_positions[0]
         if head_pos[0] < 0:
-            self.snake_positions[0] = (SCREEN_WIDTH, head_pos[1])
+            self.stop_game()
+            #self.snake_positions[0] = (SCREEN_WIDTH, head_pos[1])
         elif head_pos[0] >= SCREEN_WIDTH:
-            self.snake_positions[0] = (0, head_pos[1])
+            self.stop_game()
+            #self.snake_positions[0] = (0, head_pos[1])
         elif head_pos[1] < 0:
-            self.snake_positions[0] = (head_pos[0], SCREEN_HEIGHT)
+            self.stop_game()
+            #self.snake_positions[0] = (head_pos[0], SCREEN_HEIGHT)
         elif head_pos[1] >= SCREEN_HEIGHT:
-            self.snake_positions[0] = (head_pos[0], 0)
+            self.stop_game()
+            #self.snake_positions[0] = (head_pos[0], 0)
 
     def _hit_itself(self, new_head_pos) -> bool:
         """
@@ -104,7 +109,9 @@ class SnakeGame:
         :param new_head_pos: New snake head position.
         :return: True if snake have hit it self
         """
-        return False  # TODO: Check if snake have hitted it self
+        for i in self.snake_positions:
+            if new_head_pos == i:
+                return True
 
     def move_right(self) -> None:
         """
@@ -113,7 +120,8 @@ class SnakeGame:
         Changing direction to right is not allowed when you are moving right.
         """
         print('Hit right key')
-        # self.velocity =
+        if self.velocity[0] == 0:
+             self.velocity = (VELOCITY_NORM, 0)
 
     def move_left(self) -> None:
         """
@@ -123,7 +131,8 @@ class SnakeGame:
         The velocity norm is always the constant value VELOCITY_NORM
         """
         print('Hit left key')
-        # self.velocity =
+        if self.velocity[0] == 0:
+             self.velocity = (-VELOCITY_NORM, 0)
 
     def move_down(self) -> None:
         """
@@ -133,7 +142,8 @@ class SnakeGame:
         The velocity norm is always the constant value VELOCITY_NORM.
         """
         print('Hit down key')
-        # self.velocity =
+        if self.velocity[1] == 0:   
+            self.velocity = (0, VELOCITY_NORM) 
 
     def move_up(self) -> None:
         """
@@ -143,8 +153,10 @@ class SnakeGame:
         The velocity norm is always the constant value VELOCITY_NORM
         """
         print('Hit up key')
-        # self.velocity =
+        if self.velocity[1] == 0: 
+            self.velocity = (0, -VELOCITY_NORM) 
 
     def stop_game(self) -> None:
         print('Game ended')
         self.game_running = False
+

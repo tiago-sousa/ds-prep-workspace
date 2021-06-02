@@ -1,7 +1,7 @@
 import time
 
 import pygame
-from pygame import K_RIGHT, K_LEFT, K_DOWN, K_UP
+from pygame import K_RIGHT, K_LEFT, K_DOWN, K_UP, K_p, K_q
 
 from pygame_utils import (
     set_up_screen,
@@ -10,7 +10,6 @@ from pygame_utils import (
     show_message
 )
 from snake import SnakeGame
-
 
 def main():
     screen = set_up_screen()
@@ -21,6 +20,8 @@ def main():
             break
         keys = pygame.key.get_pressed()
         if snake.is_running():
+            if (keys[K_q]):
+                pygame.quit()
             if (keys[K_RIGHT]):  # Check if K_RIGHT was Pressed
                 snake.move_right()
 
@@ -37,6 +38,9 @@ def main():
             draw_snake_game(screen, snake)
         else:
             show_message(screen, 'You lost')
+            if (keys[K_q]):
+                pygame.quit()
+        
 
 
 if __name__ == '__main__':
